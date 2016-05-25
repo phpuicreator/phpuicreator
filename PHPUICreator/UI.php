@@ -17,13 +17,15 @@ class UI
     private $_viewport = null;
     private $_models = array();
     private $_supported_languages = array(
-        "es"    => "Español",
+        "en"    => "English",
         "ca"    => "Català",
-        "en"    => "English"
+        "es"    => "Español"
     );
     private $_ui_language = "es";
     private $_ui_skin = 'triton';
     private $_ui_vars = array();
+    
+    protected $_translations = null;
     
     public $debug = false;
     
@@ -33,6 +35,7 @@ class UI
         {
             $class = strtr($raw_class, array("\\" => "/"));
             $file = __DIR__."/".$class.".php";
+            $alternate_file = strtr($file, array($this->getPHPUICreatorDir()."/" => ""));
 
             if(is_readable($file))
             {
@@ -40,8 +43,16 @@ class UI
             }
             else
             {
-                \helpers::sayKo("Class [".$file."] does'nt exist.");
-                die();
+                $file = $alternate_file;
+                if(is_readable($file))
+                {
+                    require_once $file;
+                }
+                else
+                {
+                    \helpers::sayKo("Class [".$file."] does'nt exist.");
+                    die();
+                }
             }
         });
         
@@ -49,6 +60,9 @@ class UI
         {
             $this->setLanguage($language_code);
         }
+        
+        $lang_controller = 'resources\lang\\'.$this->getLanguage();
+        $this->_translations = new $lang_controller;
     }
     
     public function setDebugMode($enabled = true)
@@ -83,6 +97,8 @@ class UI
         if(!is_null($language_code) && key_exists($language_code, $this->_supported_languages))
         {
             $this->_ui_language = $language_code;
+            $lang_controller = 'resources\lang\\'.$this->getLanguage();
+            $this->_translations = new $lang_controller;
             
             return true;
         }
@@ -100,6 +116,11 @@ class UI
     public function getPHPUICreatorDir()
     {
         return $this->_dir;
+    }
+    
+    public function getTranslations()
+    {
+        return $this->_translations;
     }
     
     public function addVar($var_name, $var_value, $var_type = "string")
@@ -180,7 +201,7 @@ class UI
     
     public function getViewport()
     {
-        $this->_viewport = viewport::getViewport();
+        $this->_viewport = viewport::getViewport($this);
         
         return $this->_viewport;
     }

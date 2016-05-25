@@ -36,4 +36,6 @@ class helpers
             echo '{"success": false, "data":{"result":"'.$message.'"}}';
         }         
     }
+    
+    
 }

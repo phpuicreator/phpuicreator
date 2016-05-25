@@ -43,6 +43,7 @@ class viewport
 
     protected function __construct()
     {
+        
     }
     
     private function __clone()
@@ -175,7 +176,7 @@ class viewport
     
     private function _initRegions()
     {
-        $widget = new widget();
+        $widget = new widget("dummy_initial_widget");
         
         $this->setCenter($widget);
         $this->setEast($widget);

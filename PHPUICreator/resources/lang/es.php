@@ -3,7 +3,7 @@
 namespace resources\lang;
 
 /**
- * English transaltion rom models fields labels
+ * Spanish transaltion for models fields labels
  *
  * @author Xavier Piquer
  */

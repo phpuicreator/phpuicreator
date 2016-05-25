@@ -13,16 +13,21 @@ namespace widget;
  */
 class widget
 {
+    private $_UI = null;
     private $_hide_title = false;
     private $_current_view = null;
     
-    protected $_title = null;
+    protected $_name = "";
+    protected $_title = "n/a";
     
     public $current_view_class = "widget\\widget__view";
     
-    public function __construct()
+    public function __construct($name, $ui = null)
     {
-       
+       $this->_UI = $ui;
+       $this->_name = $name;
+       $this->applyTranslations();
+       $this->refreshView();
     }
     
     public function setView($class_name)
@@ -31,9 +36,36 @@ class widget
         $this->_current_view = new $class_name($this);
     }
     
+    public function setName($name)
+    {
+        $this->_name = $name;
+    }
+    
+    public function getName()
+    {
+        return $this->_name;
+    }
+    
     public function setTitle($title)
     {
         $this->_title = $title;
+    }
+    
+    public function getTitle()
+    {
+        
+        return ($this->_hide_title) ? "" : $this->_title;
+    }
+    
+    public function hideTitle($value = true)
+    {
+        $this->_hide_title = $value;
+        $this->refreshView();
+    }
+    
+    public function isTitleHidden()
+    {
+        return $this->_hide_title;
     }
     
     public function getView()
@@ -57,21 +89,14 @@ EOT;
     {
         $this->setView($this->current_view_class);
     }
-    
-    public function getTitle()
+
+    public function applyTranslations()
     {
+        if(!is_null($this->_UI))
+        {
+            $lang = $this->_UI->getTranslations();
         
-        return ($this->_hide_title) ? "" : $this->_title;
-    }
-    
-    public function hideTitle($value = true)
-    {
-        $this->_hide_title = $value;
-        $this->refreshView();
-    }
-    
-    public function isTitleHidden()
-    {
-        return $this->_hide_title;
-    }
+            $this->setTitle($lang->trans[$this->getName()]);
+        }
+    }    
 }

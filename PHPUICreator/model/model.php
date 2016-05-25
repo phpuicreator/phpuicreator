@@ -206,7 +206,6 @@ EOT;
     {
         $new_values = array();
         $current_lang = $this->getUI()->getLanguage();
-        //require_once __DIR__.'resources/lang/'.$current_lang.".php";
         $lang_controller = 'resources\lang\\'.$current_lang;
         $lang = new $lang_controller;
         

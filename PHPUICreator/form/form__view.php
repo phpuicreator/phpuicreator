@@ -70,10 +70,27 @@ class form__view
                             });
                         }
                     }
-                }]
+                }{$this->_addExtraButtons()}]
             });
         
 EOT;
+    }
+    
+    protected function _addExtraButtons()
+    {
+        $res = "";
+        $buttons_list = $this->form->getButtons();
+        foreach($buttons_list as $key => $button)
+        {
+            if($button->separator())
+            {
+                $res .= ",'-'";
+            }
+            
+            $res .= ",".$button->getView();
+        }
+        
+        return $res;
     }
     
     protected function _prepareFields()
