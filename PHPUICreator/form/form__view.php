@@ -70,7 +70,9 @@ class form__view
                             });
                         }
                     }
-                }{$this->_addExtraButtons()}]
+                }
+                    {$this->_addExtraButtons()}
+                ]
             });
         
 EOT;

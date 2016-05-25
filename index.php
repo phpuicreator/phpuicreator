@@ -44,6 +44,14 @@ $ui->addModel(
                 "filterable"    => false,
                 "filter_widget" => "",
                 "allow_blank"   => true // Default is false
+            ),
+            "date" => array(
+                "type"          => "date", 
+                "label"         => "", //Using automatic labeling system if empty or not defined
+                "sortable"      => false,
+                "filterable"    => false,
+                "filter_widget" => "",
+                "allow_blank"   => true // Default is false
             )
         )
     )
@@ -57,8 +65,8 @@ $ui->addVar("variable2", "cadena de prueba");
 
 // Now we get the automatic form and customize submit and reset buttons
 $customers_form = $ui->getModel("customers")->getForm();
-$customers_form->submit_button_title = "Grabar";
-$customers_form->reset_button_title = "Limpiar";
+/*$customers_form->submit_button_title = "Grabar";
+$customers_form->reset_button_title = "Limpiar";*/
 
 $new_customers_form_button = $customers_form->addButton("test_form_button");
 $new_customers_form_button->toggleSeparator();

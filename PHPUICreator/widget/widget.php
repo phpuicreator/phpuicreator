@@ -85,6 +85,11 @@ EOT;
         
     }
     
+    public function getUI()
+    {
+        return $this->_UI;
+    }
+    
     public function refreshView()
     {
         $this->setView($this->current_view_class);
