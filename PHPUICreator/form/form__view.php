@@ -3,6 +3,7 @@
 namespace form;
 
 use helpers;
+use daterange\daterange;
 
 class form__view
 {
@@ -102,6 +103,7 @@ EOT;
         $fields = $this->form->model->getFields();
         foreach($fields as $key => $values)
         {
+            $std = true;
             $allow_blank = helpers::boolToString($values['allow_blank']);
             
             // text, number, date, daterange, code, email, combo, multicombo, select, multiselect
@@ -113,19 +115,27 @@ EOT;
                 case "date":
                    $xtype = "datefield";
                 break;
+                case "daterange":
+                    $daterange = new daterange();
+                   // $res .= $daterange->getView();
+                    $std = false;
+                break;
                 default:
                    $xtype = "textfield";
                 break;
             }
             
-            $res .= <<<EOT
-                {
-                    xtype: '{$xtype}',
-                    fieldLabel: '{$values['label']}',
-                    name: '{$key}',
-                    allowBlank: {$allow_blank}
-                }
+            if($std)
+            {
+                $res .= <<<EOT
+                    {
+                        xtype: '{$xtype}',
+                        fieldLabel: '{$values['label']}',
+                        name: '{$key}',
+                        allowBlank: {$allow_blank}
+                    }
 EOT;
+            }
             $n++;
             if($n < count($fields))
             {

@@ -52,6 +52,14 @@ $ui->addModel(
                 "filterable"    => false,
                 "filter_widget" => "",
                 "allow_blank"   => true // Default is false
+            ),
+            "daterange" => array(
+                "type"          => "daterange", 
+                "label"         => "", //Using automatic labeling system if empty or not defined
+                "sortable"      => false,
+                "filterable"    => false,
+                "filter_widget" => "",
+                "allow_blank"   => true // Default is false
             )
         )
     )
@@ -72,9 +80,8 @@ $new_customers_form_button = $customers_form->addButton("test_form_button");
 $new_customers_form_button->toggleSeparator();
 
 // We want the customers form to fill the center region of main viewport
-$ui->getViewport()->setCenter($customers_form);
+//$ui->getViewport()->setCenter($customers_form);
+$ui->getViewport()->setEast($customers_form);
 
 // Render application
 $ui->render();
-
-

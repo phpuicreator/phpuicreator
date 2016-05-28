@@ -1,15 +1,20 @@
 <?php
 
+use common\common;
+
 class UI__view
 {
     public $ui;
     
     private $_ext_version;
+    private $_common;
     // private $_viewport = null;
     
     public function __construct($UI)
     {
         $this->ui = $UI;
+        $this->_common = new common;
+        
         if($this->ui->debug)
         {
             $this->_ext_version = "ext-all-debug.js" ;
@@ -62,10 +67,12 @@ class UI__view
                     Ext.application({
                         name: 'PHPUICreator_APP',
                         requires: [
-                           // 'Ext.container.Viewport'
+                           
                             
                         ],
                         launch: function() {
+                
+                            {$this->_common->getJS()}
                 
                             var center = {$this->_getVPCenter()}
                             var north = {$this->_getVPNorth()}
