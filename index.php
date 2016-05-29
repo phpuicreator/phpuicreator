@@ -21,45 +21,55 @@ $ui->addModel(
         ),
         
         "fields"        => array(
-            "code"      => array(
-                "type"          => "text", // text, number, date, daterange, code, email, combo, multicombo, select, multiselect
-                "label"         => "", //Using automatic labeling system if empty or not defined
-                "sortable"      => false,
-                "filterable"    => false,
-                "filter_widget" => "", // Could be a previously created widget
-                "allow_blank"   => true // Default is false
-            ),
-            "description" => array(
-                "type"          => "text",
-                "label"         => "", //Using automatic labeling system if empty or not defined
-                "sortable"      => false,
-                "filterable"    => false,
-                "filter_widget" => "",
-                "allow_blank"   => true // Default is false
-            ),
-            "order" => array(
-                "type"          => "number", 
-                "label"         => "", //Using automatic labeling system if empty or not defined
-                "sortable"      => false,
-                "filterable"    => false,
-                "filter_widget" => "",
-                "allow_blank"   => true // Default is false
-            ),
-            "date" => array(
-                "type"          => "date", 
-                "label"         => "", //Using automatic labeling system if empty or not defined
-                "sortable"      => false,
-                "filterable"    => false,
-                "filter_widget" => "",
-                "allow_blank"   => true // Default is false
-            ),
-            "daterange" => array(
-                "type"          => "daterange", 
-                "label"         => "", //Using automatic labeling system if empty or not defined
-                "sortable"      => false,
-                "filterable"    => false,
-                "filter_widget" => "",
-                "allow_blank"   => true // Default is false
+            "groups" => array(
+                "test_group_1"   => array(
+                    "items" => array(
+                        "code"      => array(
+                            "type"          => "text", // text, number, date, daterange, code, email, combo, multicombo, select, multiselect
+                            "label"         => "", //Using automatic labeling system if empty or not defined
+                            "sortable"      => false,
+                            "filterable"    => false,
+                            "filter_widget" => "", // Could be a previously created widget
+                            "allow_blank"   => true // Default is false
+                        ),
+                        "description" => array(
+                            "type"          => "text",
+                            "label"         => "", //Using automatic labeling system if empty or not defined
+                            "sortable"      => false,
+                            "filterable"    => false,
+                            "filter_widget" => "",
+                            "allow_blank"   => true // Default is false
+                        )
+                    )
+                ),
+                "test_group_2"   => array(
+                    "items" => array(
+                        "order" => array(
+                            "type"          => "number", 
+                            "label"         => "", //Using automatic labeling system if empty or not defined
+                            "sortable"      => false,
+                            "filterable"    => false,
+                            "filter_widget" => "",
+                            "allow_blank"   => true // Default is false
+                        ),
+                        "date" => array(
+                            "type"          => "date", 
+                            "label"         => "", //Using automatic labeling system if empty or not defined
+                            "sortable"      => false,
+                            "filterable"    => false,
+                            "filter_widget" => "",
+                            "allow_blank"   => true // Default is false
+                        ),
+                        "daterange" => array(
+                            "type"          => "daterange", 
+                            "label"         => "", //Using automatic labeling system if empty or not defined
+                            "sortable"      => false,
+                            "filterable"    => false,
+                            "filter_widget" => "",
+                            "allow_blank"   => true // Default is false
+                        )
+                    )
+                )
             )
         )
     )

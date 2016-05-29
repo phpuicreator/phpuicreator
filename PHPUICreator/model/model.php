@@ -71,6 +71,31 @@ class model
         }
     }
     
+    public function getGroups()
+    {
+        if(isset($this->_struct['fields']['groups']))
+        {
+            return $this->_struct['fields']['groups'];
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    public function getGroup($group_index)
+    {
+        if(isset($this->_struct['fields']['groups'][$group_index]))
+        {
+            return $this->_struct['fields']['groups'][$group_index];
+        }
+        else
+        {
+            return false;
+        }
+    }
+            
+    
     public function getCrud()
     {
         if(isset($this->_struct['crud']))
@@ -188,37 +213,48 @@ EOT;
     {
         $fields_list = implode(",", $this->_forced_fields);
         
-        foreach($this->getFields() as $key => $value)
+        foreach($this->getGroups() as $g_group => $group)
         {
-            $fields = array_keys($value);
-            
-            foreach($this->_forced_fields as $forced_field)
-            {            
-                if(!in_array($forced_field, $fields))
-                {
-                    throw new Exception('Mandatory field "'.$forced_field.'" not present in fields section of '.$this->getName().' model. Mandatory fields are: '.$fields_list);
+            foreach($group['items'] as $key => $value)
+            {
+                $fields = array_keys($value);
+
+                foreach($this->_forced_fields as $forced_field)
+                {            
+                    if(!in_array($forced_field, $fields))
+                    {
+                        throw new Exception('Mandatory field "'.$forced_field.'" not present in fields section of '.$this->getName().' model. Mandatory fields are: '.$fields_list);
+                    }
                 }
             }
         }
+        
     }
     
     public function applyTranslations()
     {
+        $new_groups = array();
         $new_values = array();
         $current_lang = $this->getUI()->getLanguage();
         $lang_controller = 'resources\lang\\'.$current_lang;
         $lang = new $lang_controller;
         
-        foreach($this->getFields() as $key => $values)
+        foreach($this->getGroups() as $g_key => $group)
         {
-            $new_values[$key] = $values;
-            if(isset($values['label']) && empty($values['label']) && isset($lang->trans[$key]))
+            $new_groups[$g_key] = $group;
+            foreach($group['items'] as $key => $values)
             {
-                $new_values[$key]['label'] = $lang->trans[$key];
+                $new_values[$key] = $values;
+                if(isset($values['label']) && empty($values['label']) && isset($lang->trans[$key]))
+                {
+                    $new_values[$key]['label'] = $lang->trans[$key];
+                }
             }
+            $new_groups['groups'][$g_key]['items'] = $new_values;
+            
         }
         
-        $this->_struct['fields'] = $new_values;
+        $this->_struct['fields'] = $new_groups;
         
         // Form title
         $form_title_key = "__".$this->_struct['name']."_form_label";

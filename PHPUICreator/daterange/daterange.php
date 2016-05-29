@@ -15,6 +15,18 @@ use widget\widget;
  */
 class daterange extends widget
 {
+    public $model = null;
     public $current_view_class = "daterange\\daterange__view";
+    
+    public function __construct($model, $field_key)
+    {
+        $this->model = $model;
+        
+        parent::__construct($field_key, $this->model->getUI());
+        
+        $this->refreshView();
+    }
+    
+    
     
 }

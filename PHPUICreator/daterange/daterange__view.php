@@ -14,38 +14,51 @@ namespace daterange;
 
 class daterange__view
 {
-    public $ui;
+    public $daterange;
         
-    public function __construct($ui)
+    public function __construct($daterange)
     {
-        $this->ui = $ui;
+        $this->daterange = $daterange;
     }
     
     public function view()
     {
         return <<<EOT
-            var startdtID = uniqueID();
-            var enddtID = uniqueID();
-        
+            
             Ext.create('Ext.form.FieldSet', {
-                title: 'Date Range',
+                title: '{$this->daterange->getTitle()}',
                 items: [
                     {
                         xtype: 'datefield',
-                        fieldLabel: 'Start Date',
+                        fieldLabel: '{$this->_getStartDateLabel()}',
                         name: 'startdt',
-                        id: startdtID,
+                        itemId: 'startdtID',
                         vtype: 'daterange',
-                        endDateField: enddtID // id of the end date field
+                        //endDateField: this.down('[itemId=enddtID]')
                     },{
-                        fieldLabel: 'End Date',
+                        xtype: 'datefield',
+                        fieldLabel: '{$this->_getEndDateLabel()}',
                         name: 'enddt',
-                        id: enddtID,
+                        itemId: 'enddtID',
                         vtype: 'daterange',
-                        startDateField: startdtID // id of the start date field
+                        //startDateField: this.down('[itemId=startdtID]')
                     }]
             })
 EOT;
+    }
+    
+    private function _getStartDateLabel()
+    {
+        $lang = $this->daterange->getUI()->getTranslations();
+        return (isset($lang->reserved_trans["__daterange_start_date"])) ? $lang->reserved_trans["__daterange_start_date"] : "n/a";
+            
+    }
+    
+    private function _getEndDateLabel()
+    {
+        $lang = $this->daterange->getUI()->getTranslations();
+        return (isset($lang->reserved_trans["__daterange_end_date"])) ? $lang->reserved_trans["__daterange_end_date"] : "n/a";
+            
     }
     
 }

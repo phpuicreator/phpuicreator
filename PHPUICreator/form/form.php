@@ -26,9 +26,10 @@ class form extends widget
     
     public function __construct($model)
     {
-        parent::__construct($this->_title."__form", $model->getUI());
         $this->model = $model;
         $this->_title = $this->model->getName();
+        parent::__construct($this->_title."__form", $model->getUI());
+        
         $this->_applyStdButtonsTranslations();
         $this->refreshView();
     }

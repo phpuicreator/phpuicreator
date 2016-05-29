@@ -98,46 +98,70 @@ EOT;
     
     protected function _prepareFields()
     {
-        $n = 0;
+        $g = 0;
         $res = null;
-        $fields = $this->form->model->getFields();
-        foreach($fields as $key => $values)
+        $groups = $this->form->model->getGroups();
+        foreach($groups as $g_key => $group)
         {
-            $std = true;
-            $allow_blank = helpers::boolToString($values['allow_blank']);
+            $n = 0;
             
-            // text, number, date, daterange, code, email, combo, multicombo, select, multiselect
-            switch($values['type'])
-            {
-                case "number":
-                   $xtype = "numberfield"; 
-                break;
-                case "date":
-                   $xtype = "datefield";
-                break;
-                case "daterange":
-                    $daterange = new daterange();
-                   // $res .= $daterange->getView();
-                    $std = false;
-                break;
-                default:
-                   $xtype = "textfield";
-                break;
-            }
-            
-            if($std)
-            {
-                $res .= <<<EOT
-                    {
-                        xtype: '{$xtype}',
-                        fieldLabel: '{$values['label']}',
-                        name: '{$key}',
-                        allowBlank: {$allow_blank}
-                    }
+            $res .= <<<EOT
+                {
+                    xtype:'fieldset',
+                    columnWidth: 0.5,
+                    title: 'prova', // TODO: translage $g_key as trans key
+                    collapsible: true,
+                    defaultType: 'textfield',
+                    defaults: {anchor: '100%'},
+                    layout: 'anchor',
+                    items :[
+                    
 EOT;
+            foreach($group['items'] as $key => $field)
+            {
+                $std = true;
+                $allow_blank = helpers::boolToString($field['allow_blank']);
+
+                // text, number, date, daterange, code, email, combo, multicombo, select, multiselect
+                switch($field['type'])
+                {
+                    case "number":
+                       $xtype = "numberfield"; 
+                    break;
+                    case "date":
+                       $xtype = "datefield";
+                    break;
+                    case "daterange":
+                        $daterange = new daterange($this->form->model, $key);
+                        $res .= $daterange->getView();
+                        $std = false;
+                    break;
+                    default:
+                       $xtype = "textfield";
+                    break;
+                }
+
+                if($std)
+                {
+                    $res .= <<<EOT
+                        {
+                            xtype: '{$xtype}',
+                            fieldLabel: '{$field['label']}',
+                            name: '{$key}',
+                            allowBlank: {$allow_blank}
+                        }
+EOT;
+                }
+                $n++;
+                if($n < count($group['items']))
+                {
+                    $res .= ",";
+                }
             }
-            $n++;
-            if($n < count($fields))
+            
+            $res .= "]}";
+            $g++;
+            if($g < count($groups))
             {
                 $res .= ",";
             }

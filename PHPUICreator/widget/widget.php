@@ -100,8 +100,9 @@ EOT;
         if(!is_null($this->_UI))
         {
             $lang = $this->_UI->getTranslations();
-        
-            $this->setTitle($lang->trans[$this->getName()]);
+            $title = (isset($lang->trans[$this->getName()])) ? $lang->trans[$this->getName()] : "n/a";
+            
+            $this->setTitle($title);
         }
     }    
 }
