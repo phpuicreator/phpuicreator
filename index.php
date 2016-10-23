@@ -8,7 +8,7 @@ $ui->setPHPUICreatorDir("PHPUICreator");
 $ui->setName("Test app");
 $ui->setVersion("1.2.3.4");
 $ui->setLanguage("ca");
-$ui->setSkin('crisp'); // triton, neptune, gray, crisp, classic, aria
+$ui->setSkin('neptune'); // triton, neptune, gray, crisp, classic, aria
 
 $ui->addModel(
     array(
@@ -66,7 +66,9 @@ $ui->addModel(
                             "sortable"      => false,
                             "filterable"    => false,
                             "filter_widget" => "",
-                            "allow_blank"   => true // Default is false
+                            "allow_blank"   => true, // Default is false
+                            "start_date"    => "2016-10-15",
+                            "end_date"      => "2016-10-29"
                         )
                     )
                 )

@@ -19,7 +19,7 @@ class common extends common__view
     public function getJS()
     {
         $res = $this->uniqueID();
-        $res .= $this->daterangeVType();
+        // $res .= $this->daterangeVType();
         $res .= $this->passwordVType();
         
         return $res;

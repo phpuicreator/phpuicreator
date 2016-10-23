@@ -2,7 +2,7 @@
 
 
 /**
- * Some help functions
+ * Some helping functions
  *
  * @author Xavier Piquer
  */

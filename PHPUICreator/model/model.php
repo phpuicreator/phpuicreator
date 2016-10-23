@@ -223,7 +223,7 @@ EOT;
                 {            
                     if(!in_array($forced_field, $fields))
                     {
-                        throw new Exception('Mandatory field "'.$forced_field.'" not present in fields section of '.$this->getName().' model. Mandatory fields are: '.$fields_list);
+                        throw new \Exception('Mandatory field "'.$forced_field.'" not present in fields section of '.$this->getName().' model. Mandatory fields are: '.$fields_list);
                     }
                 }
             }
@@ -234,13 +234,13 @@ EOT;
     public function applyTranslations()
     {
         $new_groups = array();
-        $new_values = array();
         $current_lang = $this->getUI()->getLanguage();
         $lang_controller = 'resources\lang\\'.$current_lang;
         $lang = new $lang_controller;
         
         foreach($this->getGroups() as $g_key => $group)
         {
+            $new_values = array();
             $new_groups[$g_key] = $group;
             foreach($group['items'] as $key => $values)
             {
@@ -250,11 +250,10 @@ EOT;
                     $new_values[$key]['label'] = $lang->trans[$key];
                 }
             }
-            $new_groups['groups'][$g_key]['items'] = $new_values;
-            
+            $new_groups[$g_key]['items'] = $new_values;
         }
         
-        $this->_struct['fields'] = $new_groups;
+        $this->_struct['fields']['groups'] = $new_groups;
         
         // Form title
         $form_title_key = "__".$this->_struct['name']."_form_label";

@@ -28,6 +28,7 @@ class UI
     protected $_translations = null;
     
     public $debug = false;
+    public $tmp = "/tmp";
     
     public function __construct($language_code = null)
     {
@@ -104,7 +105,7 @@ class UI
         }
         else
         {
-            throw new Exception('Language is not supported.');
+            throw new \Exception('Language is not supported.');
         }
     }
     
@@ -174,7 +175,7 @@ class UI
     {
         if(!is_object($struct) && !is_array($struct))
         {
-            throw new Exception('Struct passed is not an array or stdClass.');
+            throw new \Exception('Struct passed is not an array or stdClass.');
         }
         
         if(is_object($struct))
@@ -212,6 +213,13 @@ class UI
         
         echo $view->getView();
         
+        $this->resetTmpFiles();
+        
         return true;
+    }
+    
+    public function resetTmpFiles()
+    {
+        unlink($this->tmp."/daterange");
     }
 }

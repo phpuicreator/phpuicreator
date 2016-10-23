@@ -109,7 +109,7 @@ EOT;
                 {
                     xtype:'fieldset',
                     columnWidth: 0.5,
-                    title: 'prova', // TODO: translage $g_key as trans key
+                    title: 'prova', // TODO: translate $g_key as trans key
                     collapsible: true,
                     defaultType: 'textfield',
                     defaults: {anchor: '100%'},

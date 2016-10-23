@@ -20,7 +20,8 @@ class common__view
 EOT;
         
     }
-    public function daterangeVType()
+    
+    /*public function daterangeVType()
     {
         return <<<EOT
             Ext.apply(Ext.form.VTypes, {
@@ -46,12 +47,12 @@ EOT;
                      * Always return true since we're only using this vtype to set the
                      * min/max allowed values (these are tested for after the vtype test)
                      */
-                    return true;
-                }
-            });
+                    //return true;
+             //   }
+            //});
         
-EOT;
-    }
+//EOT;
+   // }
     
     public function passwordVType()
     {
